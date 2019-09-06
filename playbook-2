@@ -1,0 +1,10 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+ 
+    - name: add an user
+      user:
+        name: prem
+        shell: /bin/sh
+        uid: 1100
+        home: /home/chandu
