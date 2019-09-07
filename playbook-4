@@ -1,0 +1,32 @@
+-  hosts: ubuntu
+   become: yes
+   vars:
+
+     jdk: openjdk-8-jdk
+     install: present
+     web: apache2
+     snake: python
+     extract: unzip
+     on: started
+     off: stopped
+   tasks:
+
+       name: install java
+       apt:
+         name: "{{jave}}"
+         state: "{{install}}"
+
+       name: install python
+       apt:
+         name: "{{python}}"
+         state: "{{install}}"
+
+       name: install unzip
+       apt:
+         name: "{{unzip}}"
+         state: "{{install}}"
+
+       name: start apache service
+       service:
+         name: "{{web}}"
+         state: "{{started}}"
