@@ -1,0 +1,46 @@
+- hosts: centos
+  become: yes
+  tasks:
+
+    - name: install java
+      yum:
+        name: java-1.8.0-openjdk.x86_64
+        state: latest
+
+    - name: install mave
+      yum:
+        name: maven
+        state: latest
+
+    - name: install git
+      yum:
+        name: git
+        state: latest
+
+    - name: git clone
+      git:
+        repo: https://github.com/wkhanvisualpathit/VProfile.git
+        dest: /home/ansadm/project
+
+    - name: get artifact
+      shell: mvn -f /home/ansadm/project/pom.xml package
+
+    - name: download tomcat
+      get_url:
+        url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.45/bin/apache-tomcat-8.5.45.tar.gz
+        dest: /home/ansadm
+        remote_src: yes
+
+    - name: unzip tar file
+      unarchive:
+         src: /home/ansadm/apache-tomcat-8.5.45.tar.gz
+         dest: /home/ansadm
+         remote_src: yes
+
+    - name: copy war file
+      copy:
+        src: /home/ansadm/project/target/vprofile-v1.war
+        dest: /home/ansadm/apache-tomcat-8.5.45/webapps
+        remote_src: yes
+
+
